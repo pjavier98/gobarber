@@ -3,3 +3,7 @@ node_modules
 
 backend/tmp/*
 !backend/tmp/.gitkeep
+
+# Ignore test-related files
+backend/coverage.data
+backend/coverage/*
