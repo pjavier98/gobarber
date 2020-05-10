@@ -1,8 +1,8 @@
 node_modules
 .vscode
 
-backend/coverage/*
 backend/tmp/*
 !backend/tmp/.gitkeep
 
 # Ignore test-related files
+backend/coverage
