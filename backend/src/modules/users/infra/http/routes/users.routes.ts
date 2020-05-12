@@ -2,8 +2,8 @@ import { Router } from 'express';
 import multer from 'multer';
 import uploadConfig from '@config/upload';
 
-import UsersControllers from '../controllers/UsersControllers';
-import UserAvatarControllers from '../controllers/UserAvatarControllers';
+import UsersControllers from '../controllers/UsersController';
+import UserAvatarControllers from '../controllers/UserAvatarController';
 
 import ensureAuthenticated from '../middlewares/ensureAuthenticated';
 
