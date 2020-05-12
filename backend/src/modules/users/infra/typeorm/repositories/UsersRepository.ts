@@ -20,7 +20,7 @@ class UsersRepository implements IUsersRepository {
 
   public async findByEmail(email: string): Promise<User | undefined> {
     const user = this.ormRepository.findOne({
-      where: email,
+      where: { email },
     });
 
     return user;
