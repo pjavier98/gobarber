@@ -1,8 +1,0 @@
-node_modules
-.vscode
-
-backend/tmp/*
-!backend/tmp/.gitkeep
-
-# Ignore test-related files
-backend/coverage
