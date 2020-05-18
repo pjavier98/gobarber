@@ -1,14 +1,21 @@
 import FakeUsersRepository from '@modules/users/repositories/fakes/FakeUsersRepository';
+import FakeCacheProvider from '@shared/container/providers/CacheProvider/fakes/FakeCacheProvider';
+
 import ListProvidersService from './ListProvidersService';
 
 let fakeUsersRepository: FakeUsersRepository;
+let fakeCacheProvider: FakeCacheProvider;
 let listProviders: ListProvidersService;
 
 describe('ListProviders', () => {
   beforeEach(() => {
     fakeUsersRepository = new FakeUsersRepository();
+    fakeCacheProvider = new FakeCacheProvider();
 
-    listProviders = new ListProvidersService(fakeUsersRepository);
+    listProviders = new ListProvidersService(
+      fakeUsersRepository,
+      fakeCacheProvider,
+    );
   });
 
   it('should be able to list the providers', async () => {
@@ -35,5 +42,58 @@ describe('ListProviders', () => {
     });
 
     expect(providers).toEqual([user1, user2]);
+  });
+
+  it('should be able to save the providers in the cache', async () => {
+    const user = await fakeUsersRepository.create({
+      name: 'John Doe',
+      email: 'johndoe@example.com',
+      password: '123456',
+    });
+
+    await fakeCacheProvider.save('user', user);
+
+    const loggedUser = await fakeUsersRepository.create({
+      name: 'John Qua',
+      email: 'johnqua@example.com',
+      password: '123456',
+    });
+
+    const providers = await listProviders.execute({
+      user_id: loggedUser.id,
+    });
+
+    expect(providers[0].id).toBe(user.id);
+  });
+
+  it('should be able to recover the providers in the cache', async () => {
+    const user = await fakeUsersRepository.create({
+      name: 'John Doe',
+      email: 'johndoe@example.com',
+      password: '123456',
+    });
+
+    await fakeCacheProvider.save('user', user);
+
+    const findAllProviders = jest.spyOn(
+      fakeUsersRepository,
+      'findAllProviders',
+    );
+
+    const loggedUser = await fakeUsersRepository.create({
+      name: 'John Qua',
+      email: 'johnqua@example.com',
+      password: '123456',
+    });
+
+    await listProviders.execute({
+      user_id: loggedUser.id,
+    });
+
+    await listProviders.execute({
+      user_id: loggedUser.id,
+    });
+
+    expect(findAllProviders).toBeCalledTimes(1);
   });
 });
