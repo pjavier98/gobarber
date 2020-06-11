@@ -14,7 +14,7 @@ import {
   UserAvatar,
   ProvidersList,
   ProvidersListTitle,
-  ProviderContaner,
+  ProviderContainer,
   ProviderAvatar,
   ProviderInfo,
   ProviderName,
@@ -36,7 +36,6 @@ const Dashboard: React.FC = () => {
 
   useEffect(() => {
     api.get('providers').then(response => {
-      console.log(response.data);
       setProviders(response.data);
     });
   }, []);
@@ -73,7 +72,7 @@ const Dashboard: React.FC = () => {
           <ProvidersListTitle>Cabeleireiros</ProvidersListTitle>
         }
         renderItem={({ item: provider }) => (
-          <ProviderContaner
+          <ProviderContainer
             onPress={() => navigateToCreateAppointment(provider.id)}
           >
             <ProviderAvatar source={{ uri: provider.avatar_url }} />
@@ -91,7 +90,7 @@ const Dashboard: React.FC = () => {
                 <ProviderMetaText>8h às 18h</ProviderMetaText>
               </ProviderMeta>
             </ProviderInfo>
-          </ProviderContaner>
+          </ProviderContainer>
         )}
       />
     </Container>

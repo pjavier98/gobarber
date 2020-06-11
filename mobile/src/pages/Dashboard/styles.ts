@@ -49,7 +49,7 @@ export const ProvidersListTitle = styled.Text`
   margin-bottom: 24px;
 `;
 
-export const ProviderContaner = styled(RectButton)`
+export const ProviderContainer = styled(RectButton)`
   background: #3e3b47;
   border-radius: 10px;
   padding: 20px;
