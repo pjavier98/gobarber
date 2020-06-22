@@ -31,6 +31,7 @@ describe('SignUp Page', () => {
   beforeEach(() => {
     mockedHistoryPush.mockClear();
     mockedAddToast.mockClear();
+    mockedApi.reset();
   });
 
   it('should be able to sign up and display an toast of success', async () => {

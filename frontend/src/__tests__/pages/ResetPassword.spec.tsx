@@ -50,6 +50,7 @@ describe('ResetPassword Page', () => {
   beforeEach(() => {
     mockedHistoryPush.mockClear();
     mockedAddToast.mockClear();
+    mockedApi.reset();
     mockedToken = jest.spyOn(RouteData, 'useLocation');
   });
 

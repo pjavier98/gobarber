@@ -22,7 +22,7 @@ jest.mock('../../hooks/toast', () => {
   };
 });
 
-describe('ResetPassword Page', () => {
+describe('ForgotPassword Page', () => {
   beforeEach(() => {
     mockedAddToast.mockClear();
   });
@@ -63,7 +63,7 @@ describe('ResetPassword Page', () => {
     });
   });
 
-  it('should not be able to recover the password if has an error', async () => {
+  it('should not be able to recover the password if has an error (status 400)', async () => {
     const { getByPlaceholderText, getByText } = render(<ForgotPassword />);
 
     mockedApi.onPost('/password/forgot').replyOnce(400);
