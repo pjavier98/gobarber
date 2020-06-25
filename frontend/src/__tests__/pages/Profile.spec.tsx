@@ -9,7 +9,7 @@ const mockedHistoryPush = jest.fn();
 const mockedUpdateUser = jest.fn();
 const mockedAddToast = jest.fn();
 
-const mockedApi = new MockAdapter(api);
+const apiMock = new MockAdapter(api);
 
 jest.mock('react-router-dom', () => {
   return {
@@ -45,7 +45,7 @@ describe('Profile Page', () => {
     mockedHistoryPush.mockClear();
     mockedUpdateUser.mockClear();
     mockedAddToast.mockClear();
-    mockedApi.reset();
+    apiMock.reset();
   });
 
   it('should be able to update the profile (name and email)', async () => {
@@ -56,7 +56,7 @@ describe('Profile Page', () => {
       email: 'jhontre@example.com',
     };
 
-    mockedApi.onPut('/profile').replyOnce(200, updateUser);
+    apiMock.onPut('/profile').replyOnce(200, updateUser);
 
     const nameField = getByPlaceholderText('Nome');
     const emailField = getByPlaceholderText('E-mail');
@@ -92,7 +92,7 @@ describe('Profile Page', () => {
       passwordConfirmation: '123123',
     };
 
-    mockedApi.onPut('/profile').replyOnce(200, updateUser);
+    apiMock.onPut('/profile').replyOnce(200, updateUser);
 
     const nameField = getByPlaceholderText('Nome');
     const emailField = getByPlaceholderText('E-mail');
@@ -160,7 +160,7 @@ describe('Profile Page', () => {
       passwordConfirmation: 'invalid-confirmation',
     };
 
-    mockedApi.onPut('/profile').replyOnce(200, updateUser);
+    apiMock.onPut('/profile').replyOnce(200, updateUser);
 
     const nameField = getByPlaceholderText('Nome');
     const emailField = getByPlaceholderText('E-mail');
@@ -200,7 +200,7 @@ describe('Profile Page', () => {
       passwordConfirmation: '123123',
     };
 
-    mockedApi.onPut('/profile').replyOnce(400);
+    apiMock.onPut('/profile').replyOnce(400);
 
     const nameField = getByPlaceholderText('Nome');
     const emailField = getByPlaceholderText('E-mail');
@@ -237,7 +237,7 @@ describe('Profile Page', () => {
   it('should be able to update the profile avatar', async () => {
     const { getByTestId } = render(<Profile />);
 
-    mockedApi.onPatch('/users/avatar').replyOnce(200);
+    apiMock.onPatch('/users/avatar').replyOnce(200);
 
     const inputAvatarFile = getByTestId('input-avatar-file');
 

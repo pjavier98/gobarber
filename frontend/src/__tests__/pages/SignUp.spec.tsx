@@ -8,7 +8,7 @@ import api from '../../services/api';
 const mockedHistoryPush = jest.fn();
 const mockedAddToast = jest.fn();
 
-const mockedApi = new MockAdapter(api);
+const apiMock = new MockAdapter(api);
 
 jest.mock('react-router-dom', () => {
   return {
@@ -31,11 +31,11 @@ describe('SignUp Page', () => {
   beforeEach(() => {
     mockedHistoryPush.mockClear();
     mockedAddToast.mockClear();
-    mockedApi.reset();
+    apiMock.reset();
   });
 
   it('should be able to sign up and display an toast of success', async () => {
-    mockedApi.onPost('users').replyOnce(200, {});
+    apiMock.onPost('users').replyOnce(200, {});
 
     const { getByPlaceholderText, getByText } = render(<SignUp />);
 
@@ -82,7 +82,7 @@ describe('SignUp Page', () => {
   });
 
   it('should display an error if login fails', async () => {
-    mockedApi.onPost('users').replyOnce(400);
+    apiMock.onPost('users').replyOnce(400);
 
     const { getByPlaceholderText, getByText } = render(<SignUp />);
 

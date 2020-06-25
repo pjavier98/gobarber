@@ -8,7 +8,7 @@ import api from '../../services/api';
 
 const mockedHistoryPush = jest.fn();
 const mockedAddToast = jest.fn();
-const mockedApi = new MockAdapter(api);
+const apiMock = new MockAdapter(api);
 let mockedToken: jest.SpyInstance;
 
 const mockLocation = {
@@ -50,7 +50,7 @@ describe('ResetPassword Page', () => {
   beforeEach(() => {
     mockedHistoryPush.mockClear();
     mockedAddToast.mockClear();
-    mockedApi.reset();
+    apiMock.reset();
     mockedToken = jest.spyOn(RouteData, 'useLocation');
   });
 
@@ -61,7 +61,7 @@ describe('ResetPassword Page', () => {
 
     const { getByPlaceholderText, getByText } = render(<ResetPassword />);
 
-    mockedApi.onPost('/password/reset').replyOnce(200);
+    apiMock.onPost('/password/reset').replyOnce(200);
 
     const newPasswordField = getByPlaceholderText('Nova senha');
     const newPasswordConfirmationField = getByPlaceholderText(
@@ -87,7 +87,7 @@ describe('ResetPassword Page', () => {
 
     const { getByPlaceholderText, getByText } = render(<ResetPassword />);
 
-    mockedApi.onPost('/password/reset').replyOnce(200);
+    apiMock.onPost('/password/reset').replyOnce(200);
 
     const newPasswordField = getByPlaceholderText('Nova senha');
     const newPasswordConfirmationField = getByPlaceholderText(
@@ -118,7 +118,7 @@ describe('ResetPassword Page', () => {
 
     const { getByPlaceholderText, getByText } = render(<ResetPassword />);
 
-    mockedApi.onPost('/password/reset').replyOnce(200);
+    apiMock.onPost('/password/reset').replyOnce(200);
 
     const newPasswordField = getByPlaceholderText('Nova senha');
     const newPasswordConfirmationField = getByPlaceholderText(

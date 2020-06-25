@@ -61,37 +61,44 @@ const Dashboard: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    api
-      .get(`/providers/${user.id}/month-availability`, {
-        params: {
-          year: currentMonth.getFullYear(),
-          month: currentMonth.getMonth() + 1,
+    async function getProviderMonthAvailability(): Promise<void> {
+      const response = await api.get(
+        `/providers/${user.id}/month-availability`,
+        {
+          params: {
+            year: currentMonth.getFullYear(),
+            month: currentMonth.getMonth() + 1,
+          },
         },
-      })
-      .then(response => {
-        setMonthAvailability(response.data);
-      });
+      );
+
+      setMonthAvailability(response.data);
+    }
+
+    getProviderMonthAvailability();
   }, [currentMonth, user.id]);
 
   useEffect(() => {
-    api
-      .get<Appointment[]>('/appointments/me', {
+    async function getAppointments(): Promise<void> {
+      const response = await api.get<Appointment[]>('/appointments/me', {
         params: {
           year: selectedDate.getFullYear(),
           month: selectedDate.getMonth() + 1,
           day: selectedDate.getDate(),
         },
-      })
-      .then(response => {
-        const appointmentsFormatted = response.data.map(appointment => {
+      });
+
+      setAppointments(
+        response.data.map(appointment => {
           return {
             ...appointment,
             hourFormatted: format(parseISO(appointment.date), 'HH:mm'),
           };
-        });
+        }),
+      );
+    }
 
-        setAppointments(appointmentsFormatted);
-      });
+    getAppointments();
   }, [selectedDate]);
 
   const disabledDays = useMemo(() => {
@@ -201,7 +208,7 @@ const Dashboard: React.FC = () => {
             )}
 
             {morningAppointments.map(appointment => (
-              <Appointment key={appointment.id}>
+              <Appointment key={appointment.id} data-testid={appointment.id}>
                 <span>
                   <FiClock />
                   {appointment.hourFormatted}
