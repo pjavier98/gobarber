@@ -123,7 +123,10 @@ const SignIn: React.FC = () => {
                 onSubmitEditing={() => formRef.current?.submitForm()}
               />
 
-              <Button onPress={() => formRef.current?.submitForm()}>
+              <Button
+                testID="submit-button"
+                onPress={() => formRef.current?.submitForm()}
+              >
                 Entrar
               </Button>
             </Form>
@@ -139,7 +142,10 @@ const SignIn: React.FC = () => {
         </ScrollView>
       </KeyboardAvoidingView>
 
-      <CreateAccount onPress={() => navigation.navigate('SignUp')}>
+      <CreateAccount
+        testID="signup-button"
+        onPress={() => navigation.navigate('SignUp')}
+      >
         <Icon name="log-in" size={20} color="#ff9000" />
         <CreateAccountText>Criar uma conta</CreateAccountText>
       </CreateAccount>
